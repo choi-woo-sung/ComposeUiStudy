@@ -20,11 +20,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -48,8 +50,8 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun ImageSlider(images: List<Any>) {
-    var currentImageIndex by remember { mutableStateOf(0) }
+fun ImageSlider(images: List<String>) {
+    var currentImageIndex by remember { mutableIntStateOf(0) }
     val coroutineScope = rememberCoroutineScope()
     val state = rememberLazyListState()
     Column(modifier = Modifier.fillMaxSize()) {
@@ -66,7 +68,7 @@ fun ImageSlider(images: List<Any>) {
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 state = state,
 
-            ) {
+                ) {
                 itemsIndexed(images) { index, image ->
                     CaroselCard(image)
                 }
@@ -76,7 +78,7 @@ fun ImageSlider(images: List<Any>) {
 }
 
 @Composable
-private fun CaroselCard(image: Any ) {
+private fun CaroselCard(image: String) {
     val width by remember { mutableStateOf(300.dp) }
     Card(
         modifier = Modifier
@@ -88,10 +90,11 @@ private fun CaroselCard(image: Any ) {
             modifier = Modifier
                 .width(width)
                 .height(200.dp),
-            model = image as String,
+            model = image,
+            contentScale = ContentScale.Crop,
             contentDescription = "",
 
-        )
+            )
     }
 }
 

@@ -29,7 +29,10 @@
             android:name=".mp3.service.StartMp3Service"
             android:exported="false" />
         <service
-            android:name=".mp3.service.BoundMp3Service"
+            android:name=".mp3.service.BindMp3Service"
+            android:exported="false" />
+        <service
+            android:name=".mp3.service.HandlerMp3Service"
             android:exported="false" />
     </application>
 

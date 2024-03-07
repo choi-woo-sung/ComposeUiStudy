@@ -70,7 +70,6 @@ fun ImageSlider(images: List<String>) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(16.dp),
                 state = state,
-
                 ) {
                 itemsIndexed(images) { index, image ->
                     CaroselCard(image)

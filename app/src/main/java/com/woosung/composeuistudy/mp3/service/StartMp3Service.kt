@@ -6,12 +6,14 @@ import android.os.IBinder
 import android.widget.Toast
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class StartMp3Service : Service() {
     var isShowingToast = true
     var musicInt = 0
+    private val job = Job()
     override fun onCreate() {
         Toast.makeText(this, "시작", Toast.LENGTH_SHORT).show()
         super.onCreate()
@@ -19,7 +21,7 @@ class StartMp3Service : Service() {
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         isShowingToast = true
-        CoroutineScope(Dispatchers.Main).launch {
+        CoroutineScope(Dispatchers.Main + job).launch {
             while (isShowingToast) {
                 delay(3000L)
                 musicInt = ++musicInt
@@ -34,6 +36,7 @@ class StartMp3Service : Service() {
     //onDestroy()일떄 파괴 된다.
     override fun onDestroy() {
         Toast.makeText(this, "꺼짐", Toast.LENGTH_SHORT).show()
+        job.cancel()
         isShowingToast = false
         super.onDestroy()
     }
